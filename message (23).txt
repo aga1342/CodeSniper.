@@ -150,7 +150,7 @@ TitleL.Size=UDim2.new(0,100,1,0)
 TitleL.Position=UDim2.new(0,31,0,0)
 TitleL.BackgroundTransparency=1
 TitleL.RichText=true
-TitleL.Text='<font color="rgb(220,60,60)">M2</font> <font color="rgb(255,180,180)" size="10">Hub</font>'
+TitleL.Text='<font color="rgb(220,60,60)">LIGHT</font> <font color="rgb(255,180,180)" size="10">Hub</font>'
 TitleL.TextSize=12
 TitleL.Font=Enum.Font.GothamBold
 TitleL.TextColor3=T.White
