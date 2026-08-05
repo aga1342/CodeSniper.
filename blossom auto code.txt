@@ -614,7 +614,7 @@ local function createUI()
     HeaderLabel.Size = UDim2.new(1, -55, 0, 22)
     HeaderLabel.Position = UDim2.new(0, 15, 0, 2)
     HeaderLabel.BackgroundTransparency = 1
-    HeaderLabel.Text = "Blossom Redeemer"
+    HeaderLabel.Text = "Light Redeemer"
     HeaderLabel.TextColor3 = Color3.fromRGB(255, 105, 180)
     HeaderLabel.TextSize = 14
     HeaderLabel.Font = Enum.Font.GothamBold
@@ -632,7 +632,7 @@ local function createUI()
     DiscordLabel.Size = UDim2.new(1, -55, 0, 14)
     DiscordLabel.Position = UDim2.new(0, 15, 0, 24)
     DiscordLabel.BackgroundTransparency = 1
-    DiscordLabel.Text = "discord.gg/blossomhubbb"
+    DiscordLabel.Text = "best script ever"
     DiscordLabel.TextColor3 = Color3.fromRGB(255, 105, 180)
     DiscordLabel.TextSize = 10
     DiscordLabel.Font = Enum.Font.Gotham
