@@ -10,7 +10,7 @@ local playerGui = player:WaitForChild("PlayerGui")
 if getgenv and getgenv().StopAura then pcall(getgenv().StopAura) end
 
 -- CONFIGURATION SYSTEM --
-local CONFIG_FILE = "ace_code_sniper_auto_redeem_test_config.json"
+local CONFIG_FILE = "jsm_code_sniper_auto_redeem_test_config.json"
 local savedConfig = {
     codeSniper = true,
     autoSubmit = true,
@@ -135,7 +135,7 @@ local function isOurGui(instance)
     local p = instance
     for _ = 1, 10 do
         if not p then break end
-        if p.Name == "ACECodeSniperUI" or p.Name == "SourcesHubRedeemerGui" then return true end
+        if p.Name == "JSMCodeSniperUI" or p.Name == "SourcesHubRedeemerGui" then return true end
         p = p.Parent
     end
     return false
@@ -502,7 +502,7 @@ workspace:GetPropertyChangedSignal("CurrentCamera"):Connect(watchViewport)
 watchViewport()
 
 local BackgroundImage = Instance.new("ImageLabel")
-BackgroundImage.Name = "ACEBackground"
+BackgroundImage.Name = "JSMBackground"
 BackgroundImage.Size = UDim2.new(1, 0, 1, 0)
 BackgroundImage.Position = UDim2.fromOffset(0, 0)
 BackgroundImage.BackgroundTransparency = 1
@@ -574,7 +574,7 @@ BrandImage.ScaleType = Enum.ScaleType.Fit
 BrandImage.Parent = BrandMark
 addCorner(BrandImage, 15)
 
-makeLabel(Header, "Title", "ACE CODE SNIPER", UDim2.fromOffset(180, 25), UDim2.fromOffset(56, 17), 15, COLORS.White, Enum.Font.GothamBold)
+makeLabel(Header, "Title", "JSM CODE SNIPER", UDim2.fromOffset(180, 25), UDim2.fromOffset(56, 17), 15, COLORS.White, Enum.Font.GothamBold)
 
 -- TOP RIGHT TOGGLE BUTTON (UPDATED FOR MOBILE & PC) --
 local AutoWriteButton = Instance.new("TextButton")
@@ -1000,7 +1000,7 @@ end)
 
 UserInputService.TextBoxFocusReleased:Connect(function(box)
     if box:IsDescendantOf(GUI) then return end
-    local codeBox = aceCodeBox()
+    local codeBox = jsmCodeBox()
     if box ~= codeBox and box ~= _lastBox then return end
     if _retypeInvalid and rememberPendingSubmission and (box == codeBox or box == _lastBox) then
         local submittedText = box.Text ~= "" and box.Text or _lastNonBlankBoxText
@@ -1037,7 +1037,7 @@ end
 local function restoreRejectedText(box, previousText)
     if not _retypeInvalid or not previousText or previousText == "" then return false end
     RunService.Heartbeat:Wait()
-    local repasteBox = aceCodeBox() or box
+    local repasteBox = jsmCodeBox() or box
     if not repasteBox or not isVisibleChain(repasteBox) then return false end
     local restored = pcall(function() repasteBox.Text = previousText end)
     if restored then
@@ -1078,7 +1078,7 @@ function appendToBox(text)
         resetPasteCounter()
         clearBoxWatchers()
     end
-    local box = aceCodeBox()
+    local box = jsmCodeBox()
     _capturedParts[#_capturedParts + 1] = text
     local combinedCode = table.concat(_capturedParts)
     local capturedCount = #_capturedParts
@@ -1194,14 +1194,14 @@ local function onAceAnnouncement(...)
     if text:find("%s") then return end
 
     for _, word in ipairs(aceTokenize(text)) do
-        aceCollectBuffer[#aceCollectBuffer + 1] = word
+        aceCollectBuffer[#JSMCollectBuffer + 1] = word
     end
     
     local parts = {}
-    for index = 1, math.min(#aceCollectBuffer, ACE_WORD_COUNT) do
+    for index = 1, math.min(#aceCollectBuffer, JSM_WORD_COUNT) do
         parts[index] = aceCollectBuffer[index]
     end
-    if #aceCollectBuffer < ACE_WORD_COUNT then return end
+    if #aceCollectBuffer < JSM_WORD_COUNT then return end
     aceCollectBuffer = {}
     
     local captured = table.concat(parts)
@@ -1215,16 +1215,15 @@ local aceNotifyRemote = resolveNotifyRemote()
 local aceListenConnection
 if aceNotifyRemote then
     if getgenv then
-        local previous = getgenv().ACECodeSniperNotifyConnection
+        local previous = getgenv().JSMCodeSniperNotifyConnection
         if previous then pcall(function() previous:Disconnect() end) end
     end
     aceListenConnection = aceNotifyRemote.OnClientEvent:Connect(function(...)
         if not _enabled then return end
         pcall(onAceAnnouncement, ...)
     end)
-    if getgenv then getgenv().ACECodeSniperNotifyConnection = aceListenConnection end
+    if getgenv then getgenv().JSMCodeSniperNotifyConnection = aceListenConnection end
 end
-
 if getgenv then
     getgenv().StopAura = function()
         if aceListenConnection then
